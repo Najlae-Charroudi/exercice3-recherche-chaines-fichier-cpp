@@ -40,15 +40,23 @@ bool contientSansFind(string chaine, string mot)
 int main()
 {
     vector<string> mots;
+
     string nomFichier;
     string ligne;
-    string mot;
+    string mot1;
+    string mot2;
 
+    // =========================
     // Nom du fichier
+    // =========================
+
     cout << "Donner le nom du fichier : ";
     cin >> nomFichier;
 
+    // =========================
     // Ouverture du fichier
+    // =========================
+
     ifstream fichier(nomFichier);
 
     if (!fichier)
@@ -57,7 +65,10 @@ int main()
         return 1;
     }
 
-    // Lecture du fichier et remplissage du vector
+    // =========================
+    // Lecture du fichier
+    // =========================
+
     while (getline(fichier, ligne))
     {
         mots.push_back(ligne);
@@ -68,9 +79,15 @@ int main()
     cout << "\nNombre de chaines lues : "
          << mots.size() << endl;
 
-    // Mot à rechercher
+    // =========================
+    // Saisie des mots
+    // =========================
+
     cout << "Donner le mot a chercher : ";
-    cin >> mot;
+    cin >> mot1;
+
+    cout << "Donner le mot de remplacement : ";
+    cin >> mot2;
 
     // =========================
     // Recherche avec find()
@@ -82,10 +99,17 @@ int main()
 
     for (int i = 0; i < mots.size(); i++)
     {
-        if (contientFind(mots[i], mot))
+        if (contientFind(mots[i], mot1))
         {
             trouveFind = true;
-            break;
+
+            int position = mots[i].find(mot1);
+
+            mots[i].replace(
+                position,
+                mot1.length(),
+                mot2
+            );
         }
     }
 
@@ -106,10 +130,9 @@ int main()
 
     for (int i = 0; i < mots.size(); i++)
     {
-        if (contientSansFind(mots[i], mot))
+        if (contientSansFind(mots[i], mot1))
         {
             trouveSansFind = true;
-            break;
         }
     }
 
@@ -121,24 +144,42 @@ int main()
         );
 
     // =========================
-    // Affichage des résultats
+    // Résultats
     // =========================
 
     if (trouveFind)
-        cout << "\n[Avec find] Le mot \"" << mot
-             << "\" existe dans le fichier." << endl;
+    {
+        cout << "\n[Avec find] Mot trouve et remplace." << endl;
+    }
     else
-        cout << "\n[Avec find] Le mot \"" << mot
-             << "\" n'existe pas dans le fichier." << endl;
+    {
+        cout << "\n[Avec find] Mot non trouve." << endl;
+    }
 
     if (trouveSansFind)
-        cout << "[Sans find] Le mot \"" << mot
-             << "\" existe dans le fichier." << endl;
+    {
+        cout << "[Sans find] Mot trouve." << endl;
+    }
     else
-        cout << "[Sans find] Le mot \"" << mot
-             << "\" n'existe pas dans le fichier." << endl;
+    {
+        cout << "[Sans find] Mot non trouve." << endl;
+    }
 
+    // =========================
+    // Affichage du vector modifié
+    // =========================
+
+    cout << "\nVector apres remplacement :" << endl;
+
+    for (int i = 0; i < mots.size(); i++)
+    {
+        cout << mots[i] << endl;
+    }
+
+    // =========================
     // Temps
+    // =========================
+
     cout << "\nTemps avec find : "
          << dureeFind.count() << " ns" << endl;
 
