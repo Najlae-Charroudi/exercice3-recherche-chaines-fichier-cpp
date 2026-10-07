@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1791233131 source:/home/charroudinajlae71/bin/c++deilisi2/exercice_seance_2_dll/exercice3_seance_3_recherche_fichier/main.cpp
+	<iostream>
+	<vector>
+	<string>
+	<fstream>
+	<chrono>
+
